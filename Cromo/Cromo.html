@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cromo Personalizable</title>
+  <style>
+    body {
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      height: 100vh;
+    }
+
+    @keyframes entrada-cromo {
+      0% {
+        transform: scale(0) rotateY(0deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.2) rotateY(540deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) rotateY(720deg);
+      }
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .cromo {
+      width: 450px;
+      height: 512px;
+      border-radius: 10px;
+      border: 4px solid black;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      animation: entrada-cromo 2s ease forwards, flotar 3s ease-in-out infinite;
+      animation-delay: 0s, 2s;
+    }
+
+    .encabezado-cromo {
+      background: #0076c0;
+      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      position: relative;
+      border-bottom: 4px solid black;
+    }
+
+    .titulo {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .subtitulo {
+      font-size: 12px;
+      font-style: italic;
+    }
+    .numero {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  text-align: center;
+  background: #a0d55f;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 0 6px;
+  font-size: 20px;
+  text-shadow: -0.5px -0.5px 0 #000,
+                0.5px -0.5px 0 #000,
+               -0.5px  0.5px 0 #000,
+                0.5px  0.5px 0 #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+
+
+    .contenedor-imagen {
+      position: relative;
+      flex-grow: 1;
+      overflow: hidden;
+      border-bottom: 4px solid black;
+    }
+
+    .imagen-cromo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .contenido-cromo {
+      position: absolute;
+      bottom: 60px;
+      left: 10px;
+      right: 10px;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      pointer-events: none;
+    }
+
+    .habilidad {
+      font-weight: bold;
+      color: #f8e71c;
+      text-shadow: -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                   -1px  1px 0 #000,
+                    1px  1px 0 #000;
+    }
+
+    .habilidad::first-letter {
+      font-size: 18px;
+    }
+
+    .estrellas {
+      color: gold;
+      margin-left: 5px;
+      text-shadow: -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                   -1px  1px 0 #000,
+                    1px  1px 0 #000;
+    }
+
+    .descripcion {
+      margin-top: 4px;
+      color: #e6e600;
+      text-shadow: -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                   -1px  1px 0 #000,
+                    1px  1px 0 #000;
+    }
+
+    .descripcion::first-letter {
+      font-size: 17px;
+    }
+
+    .pie-cromo {
+      background: #005fa3;
+      color: white;
+      padding: 6px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .pie-cromo::first-letter {
+      font-size: 16px;
+    }
+
+    .estrellas {
+      color: gold;
+      margin-left: 5px;
+      text-shadow: -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                   -1px  1px 0 #000,
+                    1px  1px 0 #000;
+    }
+
+    .descripcion {
+      margin-top: 4px;
+      color: #e6e600;
+      text-shadow: -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                   -1px  1px 0 #000,
+                    1px  1px 0 #000;
+    }
+
+    .descripcion::first-letter {
+      font-size: 17px;
+    }
+
+    .pie-cromo {
+      background: #005fa3;
+      color: white;
+      padding: 6px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .pie-cromo::first-letter {
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cromo">
+    <div class="encabezado-cromo">
+      <div class="titulo">MONO GILIPOLLAS</div>
+      <div class="subtitulo">"TOPANGA IMAGES"</div>
+      <div class="numero">3/8</div>
+    </div>
+
+    <div class="contenedor-imagen">
+      <img src="mono.jpg" alt="Mono Gilipollas" class="imagen-cromo">
+      <div class="contenido-cromo">
+        <div class="habilidad">+1 SACAR EL PUTO DEDO <span class="estrellas">⭐</span></div>
+        <div class="descripcion">ES UN MONO GILIPOLLAS QUE TE SACA EL PUTO DEDO.</div>
+      </div>
+    </div>
+
+    <div class="pie-cromo">RAUL DEL VALLE</div>
+  </div>
+</body>
+</html>
