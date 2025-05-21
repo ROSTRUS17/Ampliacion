@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Escondite Inglés Regular</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      margin: 0;
+    }
+
+    header {
+      font-size: 40px;
+      padding: 10px;
+      background: #fff;
+      border-bottom: 2px solid #ccc;
+    }
+
+    #tablero {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .camino {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .casilla {
+      width: 60px;
+      height: 40px;
+      border: 1px solid black;
+      margin: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+    }
+
+    .jugador {
+      font-size: 20px;
+    }
+
+    .corazon {
+      color: red;
+    }
+
+    #controles {
+      margin-top: 20px;
+    }
+
+    .control {
+      margin: 10px;
+    }
+
+    #log {
+      width: 80%;
+      margin: 20px auto;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+      white-space: pre-wrap;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    button {
+      margin: 0 5px;
+      padding: 5px 15px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>👁️‍🗨️</header>
+  <h2>El escondite inglés regular</h2>
+  <div id="tablero"></div>
+
+  <div id="controles"></div>
+
+  <div id="log"></div>
+
+  <script>
+    const jugadores = ['Jug1', 'Jug2', 'Jug3'];
+    let posiciones = [0, 0, 0];
+    let corazones = [false, false, false];
+    let accionesElegidas = [null, null, null];
+    let juegoTerminado = false;
+
+    const dados = {
+      Negro1: [1,1,1,1,2,2],
+      Negro2: [1,1,1,1,0,0],
+      Negro3: [1,1,0,0,0,0],
+      Rojo:   [1,1,1,1,1,0]
+    };
+
+    let bolsa = ['Negro1', 'Negro2', 'Negro3', 'Rojo'];
+    let usados = [];
+
+    function tirarDado(nombre) {
+      const caras = dados[nombre];
+      return caras[Math.floor(Math.random() * caras.length)];
+    }
+
+    function mostrarTablero() {
+      const tablero = document.getElementById('tablero');
+      tablero.innerHTML = '';
+      for (let i = 0; i < 3; i++) {
+        const camino = document.createElement('div');
+        camino.className = 'camino';
+        for (let j = 0; j <= 10; j++) {
+          const casilla = document.createElement('div');
+          casilla.className = 'casilla';
+          if (posiciones[i] === j) {
+            casilla.innerHTML = `<span class="jugador">${jugadores[i]}${corazones[i] ? '❤' : ''}</span>`;
+          }
+          camino.appendChild(casilla);
+        }
+        tablero.appendChild(camino);
+      }
+    }
+
+    function crearBotones() {
+      const contenedor = document.getElementById('controles');
+      contenedor.innerHTML = '';
+      jugadores.forEach((jug, i) => {
+        const div = document.createElement('div');
+        div.className = 'control';
+        div.innerHTML = `
+          Jugador ${jug}:
+          <button onclick="elegirAccion(${i}, 'andar')">A</button>
+          <button onclick="elegirAccion(${i}, 'pararse')">P</button>
+          <span id="estado${i}">Esperando...</span>
+        `;
+        contenedor.appendChild(div);
+      });
+    }
+
+    function log(texto) {
+      const log = document.getElementById('log');
+      log.innerText += texto + '\n';
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function elegirAccion(jugador, accion) {
+      if (juegoTerminado || accionesElegidas[jugador] !== null) return;
+      accionesElegidas[jugador] = accion;
+      document.getElementById(`estado${jugador}`).innerText = accion.toUpperCase();
+
+      if (accionesElegidas.every(a => a !== null)) {
+        resolverTurno();
+      }
+    }
+
+    function renovarBolsa() {
+      bolsa = ['Negro1', 'Negro2', 'Negro3', 'Rojo'];
+      usados = [];
+      log("🔁 Se renueva la bolsa.");
+    }
+
+    function sacarDado() {
+      if (bolsa.length === 0) renovarBolsa();
+      const index = Math.floor(Math.random() * bolsa.length);
+      const extraido = bolsa.splice(index, 1)[0];
+      usados.push(extraido);
+      return extraido;
+    }
+
+    function resolverTurno() {
+      const dado = sacarDado();
+      log(`🎲 Dado extraído: ${dado}`);
+
+      for (let i = 0; i < 3; i++) {
+        const accion = accionesElegidas[i];
+        log(`Jugador ${jugadores[i]} elige: ${accion}`);
+
+        if (accion === 'pararse') {
+          if (dado === 'Rojo' && !corazones[i]) {
+            corazones[i] = true;
+            log(`→ Jugador ${jugadores[i]} gana un corazón ❤`);
+          }
+        } else {
+          if (dado.startsWith('Negro')) {
+            const dadosParaTirar = usados.filter(d => d.startsWith('Negro'));
+            let avance = dadosParaTirar.map(d => tirarDado(d)).reduce((a,b) => a + b, 0);
+            posiciones[i] += avance;
+            log(`→ Avanza ${avance}. Posición actual: ${posiciones[i]}`);
+          } else {
+            if (corazones[i]) {
+              corazones[i] = false;
+              log(`→ El ojo lo vio 👁️‍🗨️. Pierde su corazón 💔`);
+            } else {
+              const dadosParaTirar = usados.filter(d => d.startsWith('Negro')).concat('Rojo');
+              let total = dadosParaTirar.map(d => tirarDado(d)).reduce((a,b) => a + b, 0);
+              posiciones[i] -= total;
+              if (posiciones[i] < 0) posiciones[i] = 0;
+              log(`→ El ojo lo vio sin corazón. Retrocede ${total}. Nueva posición: ${posiciones[i]}`);
+            }
+          }
+        }
+
+        if (posiciones[i] >= 10) {
+          log(`🎉 ¡Jugador ${jugadores[i]} GANA! 🎉`);
+          juegoTerminado = true;
+        }
+      }
+
+      const negrosSacados = usados.filter(x => x.startsWith('Negro')).length;
+      const rojoSacado = usados.includes('Rojo');
+      if (negrosSacados === 3 || rojoSacado) {
+        renovarBolsa();
+      }
+
+      accionesElegidas = [null, null, null];
+      mostrarTablero();
+      crearBotones();
+    }
+
+    // Inicializar
+    mostrarTablero();
+    crearBotones();
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Resultados</title>
+  <link rel="stylesheet" href="my.css">
+  <script src="sweetalert2.all.min.js"></script>
+
+</head>
+<body>
+  <div class="form-container">
+    <h1>Resultados del Cuestionario del Maestro y Señor Cigala</h1>
+
+    <h2>Cigalaresultados</h2>
+    <table>
+        <tbody>
+            <tr>
+                
+                <td id="resNombre1"></td>
+            </tr>
+            <tr>
+                
+                <td id="resNombre2"></td>
+            </tr>
+            <tr>
+                
+                <td id="resNombre3"></td>
+            </tr>
+            <tr>
+            
+                <td id="resNombre4"></td>
+            </tr>
+        </tbody>
+    </table>
+
+  </div>
+  <a ALIGN="center" href="index.html"><p id="resFecha1"></p></a>
+  <a ALIGN="center" href="index.html"><p id="resFecha2"></p></a>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const nombre1 = localStorage.getItem("nombre1");
+      const nombre2 = localStorage.getItem("nombre2");
+      const nombre3 = localStorage.getItem("nombre3");
+      const nombre4 = localStorage.getItem("nombre4");
+      const fecha1 = localStorage.getItem("fecha1");
+      const fecha2 = localStorage.getItem("fecha2");
+
+      document.getElementById("resNombre1").textContent = "Nombre 1: " + (nombre1 || "Vacío");
+      document.getElementById("resNombre2").textContent = "Nombre 2: " + (nombre2 || "Vacío");
+      document.getElementById("resNombre3").textContent = "Nombre 3: " + (nombre3 || "Vacío");
+      document.getElementById("resNombre4").textContent = "Nombre 4: " + (nombre4 || "Vacío");
+      document.getElementById("resFecha1").textContent = "Fecha 1: " + (fecha1 || "Vacío");
+      document.getElementById("resFecha2").textContent = "Fecha 2: " + (fecha2 || "Vacío");
+    });
+  </script>
+</body>
+</html>

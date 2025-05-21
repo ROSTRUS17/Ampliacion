@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Página 1 - Formulario</title>
+</head>
+<body>
+  <h2>Formulario de Usuario</h2>
+
+  <label>Nombre:</label><br>
+  <input type="text" id="nombre"><br><br>
+
+  <label>Contraseña:</label><br>
+  <input type="password" id="contrasena"><br><br>
+
+  <label>Fecha de nacimiento:</label><br>
+  <input type="date" id="fecha"><br><br>
+
+  <label>Color favorito:</label><br>
+  <input type="color" id="color"><br><br>
+
+  <button onclick="guardarDatos()">Guardar y continuar</button>
+
+  <script>
+    function guardarDatos() {
+      localStorage.setItem("nombre", document.getElementById("nombre").value);
+      localStorage.setItem("contrasena", document.getElementById("contrasena").value);
+      localStorage.setItem("fecha", document.getElementById("fecha").value);
+      localStorage.setItem("color", document.getElementById("color").value);
+
+      window.location.href = "pagina2.html";
+    }
+  </script>
+</body>
+</html>

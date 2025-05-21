@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>El cigala señores el monstruo de los monstruos</title>
+  <link rel="stylesheet" href="my.css">
+  <!-- Eliminamos la referencia a SweetAlert si ya no la usaremos -->
+  <!-- <script src="sweetalert2.all.min.js"></script> -->
+</head>
+<body>
+  <div class="form-container">
+    <h1>El cigala señores el monstruo de los monstruos</h1>
+    <p>Esto es un cuestionario de si darías la vida por el cigala.</p>
+
+    <form id="mainForm" >
+        <label>Nombre 1</label><input type="text" placeholder="Nombre" id="name1"> <br>
+        <label>Nombre 2</label><input type="text" placeholder="Nombre" id="name2"> <br>
+        <label>Nombre 3</label> <input type="text" placeholder="Nombre" id="name3">
+        <label>Nombre 4</label> <input type="text" placeholder="Nombre" id="name4"><br>
+
+      <label>Fecha 1</label>
+      <input type="date" id="date1"><br>
+
+      <label>Fecha 2</label>
+      <input type="date" id="date2">
+
+      <p>Como de monstruo es el Cigala?</p>
+      <div style="display: flex; align-items: flex-start;">
+        <div class="radio-group">
+          <label><input type="radio" name="source" value="Search engine"> Es un mostro</label><br><br>
+          <label><input type="radio" name="source" value="Social Media"> Es un gran moustro</span></label>   <br><br>
+          <label><input type="radio" name="source"> Un mostrenco </label><br><br>
+          <label><input type="radio" name="source"> El master monster </label> <br>
+        </div>
+        <img src="Cigala.jfif" width="150" height="150" alt="Cigala" style="margin-left: 190px;">
+      </div>
+      <p>Como de monstruo es el Cigala en estrellas?</p>
+      <div class="stars">
+        ★ ★ ★ ★ ★
+      </div><br>
+
+      <div style="display: flex; gap: 10px;">
+        <button style="background-color: green; color: white; padding: 10px 20px;  cursor: pointer;">1</button>
+        <button style="background-color: green; color: white; padding: 10px 20px; ; cursor: pointer;">2</button>
+        <button type="button" onclick="irAResultados()" style="text-decoration: none; background-color: black; color: white; padding: 10px 20px; cursor: pointer; display: inline-block;">3</button>
+        <button style="background-color: green; color: white; padding: 10px 20px;  cursor: pointer;">4</button>
+        <button style="background-color: green; color: white; padding: 10px 20px;  cursor: pointer;">5</button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    function irAResultados() {
+      const nombre1 = document.getElementById("name1").value;
+      const nombre2 = document.getElementById("name2").value;
+      const nombre3 = document.getElementById("name3").value;
+      const nombre4 = document.getElementById("name4").value;
+      const fecha1 = document.getElementById("date1").value;
+      const fecha2 = document.getElementById("date2").value;
+
+      localStorage.setItem("nombre1", nombre1);
+      localStorage.setItem("nombre2", nombre2);
+      localStorage.setItem("nombre3", nombre3);
+      localStorage.setItem("nombre4", nombre4);
+      localStorage.setItem("fecha1", fecha1);
+      localStorage.setItem("fecha2", fecha2);
+
+
+      window.location.href = "resultado.html";
+    }
+  </script>
+</body>
+</html>
